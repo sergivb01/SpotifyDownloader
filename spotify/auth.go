@@ -1,5 +1,4 @@
 package spotify
-
 import (
 	"crypto/tls"
 	"encoding/json"
@@ -8,20 +7,21 @@ import (
 	"strings"
 )
 
+// CLI defines the authentication handler
 type CLI struct {
 	auth         *auth
 	ClientID     string
 	ClientSecret string
 }
 
-// Auth contains the basic authorization data
+// auth contains the basic authorization data
 type auth struct {
 	AccessToken string `json:"access_token"`
 	TokenType   string `json:"token_type"`
 	ExpiresIn   int    `json:"expires_in"`
 }
 
-// NewClient creates an spotify client
+// NewClient creates a new spotify client
 func NewClient(id, secret string) *CLI {
 	return &CLI{
 		auth:         &auth{},
@@ -67,6 +67,7 @@ func (c *CLI) request(method, url string, body io.Reader) (*http.Response, error
 	return http.DefaultClient.Do(req)
 }
 
+// GetPlaylist gets a playlist based on the url and returns a Playlist
 func (c *CLI) GetPlaylist(url string) (*Playlist, error) {
 	res, err := c.request("GET", url, nil)
 	if err != nil {

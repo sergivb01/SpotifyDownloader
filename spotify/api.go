@@ -1,5 +1,5 @@
 package spotify
-
+// Playlist defines the basic structure of a Spotify playlist
 type Playlist struct {
 	Items []struct {
 		// AddedAt string `json:"added_at"`
@@ -10,6 +10,7 @@ type Playlist struct {
 	Total int64       `json:"total"`
 }
 
+// Track defines basic structure of Spotify track
 type Track struct {
 	Name    string `json:"name"`
 	Artists []struct {
@@ -17,15 +18,17 @@ type Track struct {
 	} `json:"artists"`
 }
 
-type SpotifyResource struct {
+// Resource contains the most basic information about a track
+type Resource struct {
 	Name   string `json:"name"`
-	Artist string `json:"name"`
+	Artist string `json:"artist"`
 }
 
-func (p *Playlist) Clear() []SpotifyResource {
-	var resources []SpotifyResource
+// Clear transforms the playlist into a SpotifyResource slice
+func (p *Playlist) Clear() []Resource {
+	var resources []Resource
 	for _, item := range p.Items {
-		r := SpotifyResource{
+		r := Resource{
 			Name:   item.Track.Name,
 			Artist: item.Track.Artists[0].Name,
 		}

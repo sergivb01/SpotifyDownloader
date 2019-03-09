@@ -1,7 +1,7 @@
 package youtube
-
 import "fmt"
 
+// SearchResult defines a result from a video search
 type SearchResult struct {
 	Items []struct {
 		ID struct {
@@ -13,6 +13,7 @@ type SearchResult struct {
 	} `json:"items"`
 }
 
+// GetURL returns the video URL of a search result
 func (sr *SearchResult) GetURL() (string, error) {
 	if sr == nil {
 		return "", fmt.Errorf("Error while trying to get a URL - there is no result: %v", sr)

@@ -1,5 +1,4 @@
 package youtube
-
 import (
 	"encoding/json"
 	"io"
@@ -7,10 +6,13 @@ import (
 	"net/url"
 )
 
+// CLI contains and stores the token used for auth
 type CLI struct {
 	Token string
 }
 
+// NewClient creates a new client, based on a token
+// passed via argument
 func NewClient(token string) *CLI {
 	return &CLI{
 		Token: token,
@@ -23,6 +25,8 @@ func (c *CLI) request(method, url string, body io.Reader) (*http.Response, error
 	return http.DefaultClient.Do(req)
 }
 
+// FindVideos searches for videos in youtube
+// based in a query string
 func (c *CLI) FindVideos(query string) (*SearchResult, error) {
 	vals := &url.Values{}
 	vals.Add("q", query)
@@ -36,6 +40,7 @@ func (c *CLI) FindVideos(query string) (*SearchResult, error) {
 	}
 	defer res.Body.Close()
 
+	// Save server response into a txt file - debug
 	// b, _ := ioutil.ReadAll(res.Body)
 	// ioutil.WriteFile("cc.txt", b, 0644)
 
